@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+# Sitemap to be added when a real domain is configured.
