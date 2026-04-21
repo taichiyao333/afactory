@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>CLUB REIMS — Full Page Preview</title>
+<meta name="viewport" content="width=1440">
+<link rel="stylesheet" href="../../colors_and_type.css">
+<style>
+  html, body { background: #000; margin: 0; }
+  section { overflow-x: hidden; }
+  .preview-banner {
+    position: fixed; top: 12px; right: 12px; z-index: 9999;
+    background: rgba(232,116,60,0.95); color: #fff;
+    padding: 8px 14px; border-radius: 2px;
+    font: 500 11px/1.4 'Noto Sans JP', sans-serif; letter-spacing: 0.08em;
+  }
+</style>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="preview-banner">PREVIEW · CLUB REIMS data</div>
+<div id="root"></div>
+<script type="text/babel" src="../../ui_kits/corporate-site/Nav.jsx"></script>
+<script type="text/babel" src="../../ui_kits/corporate-site/SectionHeading.jsx"></script>
+<script type="text/babel" src="../../ui_kits/corporate-site/Hero.jsx"></script>
+<script type="text/babel" src="../../ui_kits/corporate-site/PhilosophySection.jsx"></script>
+<script type="text/babel" src="../../ui_kits/corporate-site/ServiceSection.jsx"></script>
+<script type="text/babel" src="../../ui_kits/corporate-site/MessageSection.jsx"></script>
+<script type="text/babel" src="../../ui_kits/corporate-site/InterviewSection.jsx"></script>
+<script type="text/babel" src="../../ui_kits/corporate-site/RecruitBand.jsx"></script>
+<script type="text/babel" src="../../ui_kits/corporate-site/NewsSection.jsx"></script>
+<script type="text/babel" src="../../ui_kits/corporate-site/AccessSection.jsx"></script>
+<script type="text/babel" src="../../ui_kits/corporate-site/Footer.jsx"></script>
+<script type="text/babel">
+  const BASE = '../../';
+  const fix = (p) => (p && !p.startsWith('http') ? BASE + p : p);
+
+  // Content ported from content/sites/reims.json. In production the page fetches
+  // the JSON and spreads into the components the same way.
+  const DATA = {
+    hero: {
+      variant: 'logo',
+      logo: fix('assets/logos/club_reims_logo.png'),
+      logoMaxHeight: 120,
+      subtitle: 'KITASHINCHI \u00B7 OSAKA',
+      image: fix('assets/venues/club_reims_interior.png'),
+    },
+    message: {
+      portrait: fix('assets/people/ceo_takeshi_ayata.png'),
+      name: '綾田 武司',
+      nameEn: 'Takeshi Ayata',
+      role: 'エースファクトリー代表取締役',
+      quote: '感謝を基盤に、人と向き合う。',
+      body: '私たちの原点は、「ありがとう」と言われる存在でありたいという想いにあります。誰かに喜んでもらえることが、自分の喜びになる。その積み重ねが、人を成長させ、場所の価値をつくっていくと考えています。',
+    },
+    interview: {
+      heading: { en: 'Interview', jp: 'CLUB REIMSの仲間たち' },
+      lead: '第一線で活躍するキャストが集まるこの場所には、同じ志を持ち、高め合える仲間がいます。一人では辿り着けない景色も、仲間となら目指せる。この場所で、あなた自身の可能性を広げてみませんか。',
+      motto: '自分でいられる場所。オンリーワンの。',
+      mottoRepeat: 4,
+      casts: Array.from({ length: 6 }).map((_, i) => ({
+        no: String(i + 1).padStart(2, '0'),
+        nameJa: '進撃のノア', nameEn: 'Shingeki no Noa',
+        venue: 'CLUB REIMS',
+        image: fix('assets/people/cast_noa.png'),
+        href: '#cast-' + (i + 1),
+      })),
+    },
+    news: {
+      heading: { en: 'News', jp: '最新情報' },
+      items: [
+        { venue: 'CLUB REIMS', title: '4/13(月)～17(金) 8thアニバーサリーのご案内',     date: '2026 / 04 / 26', image: fix('assets/events/club_reims_8th_anniversary.png'), href: '#news-1' },
+        { venue: 'CLUB RAISE', title: '2/2(月)3(火)、節分イベント開催',                  date: '2026 / 01 / 27', image: fix('assets/events/club_raise_setsubun.png'),        href: '#news-2' },
+        { venue: 'CLUB A',     title: '10/30(木)～31(金) ハロウィンイベント開催のお知らせ', date: '2026 / 01 / 27', image: fix('assets/events/club_a_halloween.png'),           href: '#news-3' },
+      ],
+    },
+  };
+
+  const App = () => (
+    <div data-screen-label="01 CLUB REIMS Preview">
+      <Nav />
+      <Hero {...DATA.hero} />
+      <PhilosophySection />
+      <ServiceSection />
+      <MessageSection {...DATA.message} />
+      <InterviewSection {...DATA.interview} />
+      <RecruitBand />
+      <NewsSection {...DATA.news} />
+      <AccessSection />
+      <Footer />
+    </div>
+  );
+  ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>

@@ -1,0 +1,133 @@
+{
+  "$schema": "../site.schema.json",
+  "_note": "CLUB REIMS を旗艦とする Top ページ構成。各コンポーネントが受け取る props を全てここに集約。各セクションは <Component {...data.<section>} /> の形でスプレッド可能。`_fallback: true` は CLUB REIMS 素材が未入稿で仮置き中であることを示す。",
+
+  "venue": {
+    "id": "reims",
+    "nameEn": "CLUB REIMS",
+    "nameJa": "クラブ ランス",
+    "reading": "ランス",
+    "since": "Since 2018",
+    "url": "http://club-reims.jp.net/",
+    "address": "大阪市北区堂島1丁目4番20号 第2ロイヤルビル 3F",
+    "phone": "06-4795-0810",
+    "logo": "assets/logos/club_reims_logo.png",
+    "interior": "assets/venues/club_reims_interior.png"
+  },
+
+  "nav": {
+    "items": [
+      { "en": "About Us",  "jp": "私たちの理念",          "href": "#aboutus"   },
+      { "en": "Service",   "jp": "私たちが提供するサービス", "href": "#service"   },
+      { "en": "Interview", "jp": "エースファクトリーの仲間たち", "href": "#interview" },
+      { "en": "News",      "jp": "最新情報",              "href": "#news"      },
+      { "en": "Recruit",   "jp": "採用情報",              "href": "#recruit"   }
+    ]
+  },
+
+  "hero": {
+    "variant": "logo",
+    "logo": "assets/logos/club_reims_logo.png",
+    "logoMaxHeight": 120,
+    "subtitle": "KITASHINCHI · OSAKA",
+    "image": "assets/venues/club_reims_interior.png",
+    "_fallback": false
+  },
+
+  "philosophy": {
+    "heading": { "en": "Our Philosophy", "jp": "私たちの理念" },
+    "quote": "人を大切にすることが価値を生み、\nその価値がまた人を惹きつけていく。",
+    "body": "ナイトエンターテインメントを通じて、すべての人を大切にすることを基盤としています。お客様には心地よい時間を、キャストにはその人らしく輝ける環境を。その積み重ねが、新しい出会いや気づきを生み、人生を少し前向きに変えるきっかけになると考えています。",
+    "viewMoreHref": "#philosophy"
+  },
+
+  "service": {
+    "heading": { "en": "Our Service", "jp": "私たちが提供するサービス" },
+    "quote": "自然な会話や空気感を大切にしながら、\n上質な時間を創出する。",
+    "body": "大阪・北新地を中心に、ナイトエンターテインメント事業を展開しています。この街にふさわしい、静かで上質な時間と、肩肘張らずに過ごせる心地よさを大切にしています。一人ひとりに寄り添いながら、訪れるたびに価値を感じていただける体験を。",
+    "viewMoreHref": "#service-more",
+    "allVenuesLabel": "ALL VENUES",
+    "venues": [
+      { "name": "CLUB A",     "url": "http://club-a.jp.net/",      "logo": "assets/logos/club_a_logo.png",      "interior": "assets/venues/club_a_interior_hero.png" },
+      { "name": "CLUB REIMS", "url": "http://club-reims.jp.net/",  "logo": "assets/logos/club_reims_logo.png",  "interior": "assets/venues/club_reims_interior.png"  },
+      { "name": "CLUB RAISE", "url": "http://club-raise.jp.net/",  "logo": "assets/logos/club_raise_logo.png",  "interior": "assets/venues/club_raise_interior.png"  },
+      { "name": "CLUB NILS",  "url": "http://club-nils.jp.net/",   "logo": "assets/logos/club_nils_logo.png",   "interior": "assets/venues/club_nils_interior.png"   },
+      { "name": "FUJISAKI",   "url": "http://fujisaki.jp.net/",    "logo": "assets/logos/fujisaki_logo.png",    "interior": "assets/venues/fujisaki_interior.png"    },
+      { "name": "G CLASS",    "url": "http://club-gclass.jp.net/", "logo": null,                                 "interior": "assets/venues/g_class_interior.png"     }
+    ]
+  },
+
+  "message": {
+    "portrait": "assets/people/ceo_takeshi_ayata.png",
+    "name": "綾田 武司",
+    "nameEn": "Takeshi Ayata",
+    "role": "エースファクトリー代表取締役",
+    "quote": "感謝を基盤に、人と向き合う。",
+    "body": "私たちの原点は、「ありがとう」と言われる存在でありたいという想いにあります。誰かに喜んでもらえることが、自分の喜びになる。その積み重ねが、人を成長させ、場所の価値をつくっていくと考えています。"
+  },
+
+  "interview": {
+    "heading": { "en": "Interview", "jp": "エースファクトリーの仲間たち" },
+    "lead": "第一線で活躍するキャストが集まるこの場所には、同じ志を持ち、高め合える仲間がいます。一人では辿り着けない景色も、仲間となら目指せる。この場所で、あなた自身の可能性を広げてみませんか。",
+    "motto": "自分でいられる場所。オンリーワンの。",
+    "mottoRepeat": 4,
+    "viewAllHref": "#interviews",
+    "_fallback_cast": "進撃のノアを6回仮置き中。CLUB REIMS のキャスト写真・プロフィールが入稿されたら casts[] を差し替え。",
+    "casts": [
+      { "no": "01", "nameJa": "進撃のノア", "nameEn": "Shingeki no Noa", "venue": "CLUB REIMS", "image": "assets/people/cast_noa.png", "href": "#cast-01" },
+      { "no": "02", "nameJa": "進撃のノア", "nameEn": "Shingeki no Noa", "venue": "CLUB REIMS", "image": "assets/people/cast_noa.png", "href": "#cast-02" },
+      { "no": "03", "nameJa": "進撃のノア", "nameEn": "Shingeki no Noa", "venue": "CLUB REIMS", "image": "assets/people/cast_noa.png", "href": "#cast-03" },
+      { "no": "04", "nameJa": "進撃のノア", "nameEn": "Shingeki no Noa", "venue": "CLUB REIMS", "image": "assets/people/cast_noa.png", "href": "#cast-04" },
+      { "no": "05", "nameJa": "進撃のノア", "nameEn": "Shingeki no Noa", "venue": "CLUB REIMS", "image": "assets/people/cast_noa.png", "href": "#cast-05" },
+      { "no": "06", "nameJa": "進撃のノア", "nameEn": "Shingeki no Noa", "venue": "CLUB REIMS", "image": "assets/people/cast_noa.png", "href": "#cast-06" }
+    ]
+  },
+
+  "recruit": {
+    "heading": { "en": "Recruit", "jp": "採用情報 · 共に成長できる仲間を募集しています" },
+    "ctas": [
+      { "jp": "女性キャスト", "en": "Cast Recruitment",           "href": "#recruit-cast"  },
+      { "jp": "男性正社員",   "en": "Full-Time Staff Recruitment", "href": "#recruit-staff" }
+    ]
+  },
+
+  "news": {
+    "heading": { "en": "News", "jp": "最新情報" },
+    "viewAllHref": "#all-news",
+    "items": [
+      { "venue": "CLUB REIMS", "title": "4/13(月)～17(金) 8thアニバーサリーのご案内",     "date": "2026 / 04 / 26", "image": "assets/events/club_reims_8th_anniversary.png", "href": "#news-1" },
+      { "venue": "CLUB RAISE", "title": "2/2(月)3(火)、節分イベント開催",                  "date": "2026 / 01 / 27", "image": "assets/events/club_raise_setsubun.png",        "href": "#news-2" },
+      { "venue": "CLUB A",     "title": "10/30(木)～31(金) ハロウィンイベント開催のお知らせ", "date": "2026 / 01 / 27", "image": "assets/events/club_a_halloween.png",           "href": "#news-3" }
+    ]
+  },
+
+  "access": {
+    "heading": { "en": "Access", "jp": "店舗アクセス" },
+    "venues": [
+      { "venueName": "CLUB A",     "venueReading": "エース",     "since": "Since 2013", "address": "大阪市北区堂島１丁目３番３号 北新地西辻ビル BF",            "phone": "06-6452-0810", "url": "http://club-a.jp.net/"      },
+      { "venueName": "CLUB REIMS", "venueReading": "ランス",     "since": "Since 2018", "address": "大阪市北区堂島1丁目4番20号 第2ロイヤルビル 3F",             "phone": "06-4795-0810", "url": "http://club-reims.jp.net/"  },
+      { "venueName": "CLUB RAISE", "venueReading": "レイズ",     "since": "Since 2022", "address": "大阪市北区堂島1丁目2-7 パーマリィ・イン堂島 6F",            "phone": "06-6458-0810", "url": "http://club-raise.jp.net/"  },
+      { "venueName": "CLUB NILS",  "venueReading": "ニルス",     "since": "Since 2016", "address": "大阪府大阪市北区曽根崎新地1-6-13 ニューセントラルビル B1F", "phone": "06-6342-0810", "url": "http://club-nils.jp.net/"   },
+      { "venueName": "FUJISAKI",   "venueReading": "藤崎",       "since": "",           "address": "大阪府大阪市北区堂島1-3-3 西辻ビル 2F",                    "phone": "06-6343-0128", "url": "http://fujisaki.jp.net/"    },
+      { "venueName": "G CLASS",    "venueReading": "ジークラス", "since": "Since 2022", "address": "大阪府大阪市北区堂島１丁目２−７ パーマリィ・イン B1F E号室", "phone": "06-4256-8686", "url": "http://club-gclass.jp.net/" }
+    ]
+  },
+
+  "footer": {
+    "logos": [
+      { "src": "assets/logos/club_a_logo.png",     "height": 44, "alt": "CLUB A"     },
+      { "src": "assets/logos/club_reims_logo.png", "height": 26, "alt": "CLUB REIMS" },
+      { "src": "assets/logos/club_raise_logo.png", "height": 26, "alt": "CLUB RAISE" },
+      { "src": "assets/logos/club_nils_logo.png",  "height": 26, "alt": "CLUB NILS"  }
+    ],
+    "links": [
+      { "label": "About Us",  "href": "#aboutus"   },
+      { "label": "Service",   "href": "#service"   },
+      { "label": "Interview", "href": "#interview" },
+      { "label": "News",      "href": "#news"      },
+      { "label": "Recruit",   "href": "#recruit"   }
+    ],
+    "copyright": "©︎ 2026 Ace Factory All Rights Reserved",
+    "privacyHref": "#privacy"
+  }
+}

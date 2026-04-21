@@ -1,0 +1,33 @@
+/* Preview card base — shared by every card in /preview */
+@import url('../colors_and_type.css');
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  width: 700px;
+  background: var(--af-bg-primary);
+  color: var(--af-fg);
+  font-family: var(--af-font-jp-sans);
+  font-weight: 300;
+  padding: 28px 32px;
+  overflow: hidden;
+}
+.row { display: flex; gap: 12px; align-items: stretch; }
+.col { display: flex; flex-direction: column; gap: 12px; }
+.swatch {
+  flex: 1;
+  min-height: 88px;
+  border-radius: 2px;
+  border: 1px solid var(--af-border);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 10px 12px;
+  font-family: var(--af-font-jp-sans);
+  font-size: 11px;
+  line-height: 1.4;
+  letter-spacing: 0.02em;
+}
+.swatch .lbl { color: var(--af-fg); font-weight: 400; }
+.swatch .hex { color: var(--af-fg-muted); font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 13px; letter-spacing: 0.05em; margin-top: 2px; }
+.meta { color: var(--af-fg-subtle); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; }

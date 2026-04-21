@@ -1,0 +1,284 @@
+/* =========================================================
+   Ace Factory — Colors & Typography
+   ---------------------------------------------------------
+   Brand: Ace Factory (エースファクトリー)
+   Kitashinchi, Osaka — Night Entertainment
+   Concept: 感謝を基盤に、人と向き合う
+   Voice: Quiet, refined, unpretentious, kitashinchi-worthy
+   ========================================================= */
+
+/* ---------- Web fonts (Google Fonts) -------------------- */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Noto+Sans+JP:wght@300;400;500;700&family=Noto+Serif+JP:wght@300;400;500;600&display=swap');
+
+:root {
+  /* -------------------------------------------------------
+     COLOR — BASE TOKENS
+     A strictly monochrome palette with a single warm accent.
+     Photography and surfaces live in black; orange is used
+     only for CTAs and the Recruit band (sparingly).
+  ------------------------------------------------------- */
+
+  /* Backgrounds */
+  --af-bg-primary:   #000000; /* site background, black */
+  --af-bg-secondary: #1A1A1A; /* cards, section dividers */
+  --af-bg-tertiary:  #0D0D0D; /* footer, deepest surface */
+
+  /* Text */
+  --af-text-primary:   #FFFFFF; /* body, headings, white */
+  --af-text-secondary: #A0A0A0; /* sub-text, metadata */
+  --af-text-tertiary:  #6B6B6B; /* captions, low-emphasis */
+
+  /* Accent — use sparingly. CTA + Recruit only. */
+  --af-accent:       #E8743C; /* CTA, Recruit band */
+  --af-accent-hover: #D46329; /* hover */
+
+  /* Borders */
+  --af-border:        #2A2A2A; /* quiet divider */
+  --af-border-strong: #404040; /* emphasised divider */
+
+  /* Overlays */
+  --af-overlay-10: rgba(255, 255, 255, 0.10); /* ghost hover */
+  --af-overlay-04: rgba(255, 255, 255, 0.04); /* quietest tint */
+  --af-image-veil: rgba(0, 0, 0, 0.35);       /* veil over hero imagery */
+
+  /* -------------------------------------------------------
+     SEMANTIC COLOR ALIASES
+  ------------------------------------------------------- */
+  --af-bg:          var(--af-bg-primary);
+  --af-surface:     var(--af-bg-secondary);
+  --af-surface-sub: var(--af-bg-tertiary);
+  --af-fg:          var(--af-text-primary);
+  --af-fg-muted:    var(--af-text-secondary);
+  --af-fg-subtle:   var(--af-text-tertiary);
+  --af-rule:        var(--af-border);
+  --af-rule-strong: var(--af-border-strong);
+  --af-cta:         var(--af-accent);
+  --af-cta-hover:   var(--af-accent-hover);
+
+  /* -------------------------------------------------------
+     TYPE — FONT FAMILIES
+  ------------------------------------------------------- */
+  --af-font-display: 'Cormorant Garamond', 'Noto Serif JP', serif;        /* English display */
+  --af-font-jp-serif: 'Noto Serif JP', 'Cormorant Garamond', serif;       /* JP headings */
+  --af-font-jp-sans:  'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif; /* JP body */
+  --af-font-sub:      'Cormorant Garamond', serif;                        /* romanised sub labels */
+
+  /* -------------------------------------------------------
+     TYPE — SIZE SCALE
+     Optimised for 1200px desktop; scale down ~0.8× on mobile.
+  ------------------------------------------------------- */
+  --af-fs-display-xl: 72px;   /* hero display EN */
+  --af-fs-display-lg: 56px;   /* section heading EN */
+  --af-fs-display-md: 48px;   /* sub-section EN */
+  --af-fs-display-sm: 32px;   /* small display EN */
+
+  --af-fs-heading-lg: 28px;   /* JP heading lg */
+  --af-fs-heading-md: 22px;   /* JP heading md */
+  --af-fs-heading-sm: 20px;   /* JP heading sm */
+
+  --af-fs-body-lg: 16px;      /* body default */
+  --af-fs-body-md: 15px;      /* body tight */
+  --af-fs-body-sm: 14px;      /* captions */
+  --af-fs-body-xs: 13px;      /* labels, romanised sub */
+
+  /* -------------------------------------------------------
+     TYPE — LINE-HEIGHT & TRACKING
+  ------------------------------------------------------- */
+  --af-lh-display: 1.15;
+  --af-lh-heading: 1.6;
+  --af-lh-body:    1.9;   /* spacious JP body */
+
+  --af-ls-display: 0.02em;
+  --af-ls-heading: 0.04em;
+  --af-ls-body:    0.04em;
+  --af-ls-sub:     0.05em;
+  --af-ls-button:  0.1em;  /* wide-tracked CTA labels */
+  --af-ls-eyebrow: 0.18em; /* tiny nav & eyebrow labels */
+
+  /* -------------------------------------------------------
+     SPACING — 8px grid
+  ------------------------------------------------------- */
+  --af-space-1: 8px;
+  --af-space-2: 16px;
+  --af-space-3: 24px;
+  --af-space-4: 32px;
+  --af-space-5: 48px;
+  --af-space-6: 64px;
+  --af-space-7: 96px;
+  --af-space-8: 120px;  /* min section vertical */
+  --af-space-9: 160px;  /* max section vertical */
+
+  --af-section-y:         120px;
+  --af-section-y-lg:      160px;
+  --af-container-max:     1200px;
+  --af-pad-x-mobile:      24px;
+  --af-pad-x-desktop:     48px;
+  --af-component-gap:     24px;
+  --af-component-gap-lg:  32px;
+
+  /* -------------------------------------------------------
+     RADII — near-square, restrained
+  ------------------------------------------------------- */
+  --af-radius-0: 0px;
+  --af-radius-1: 2px;   /* buttons, inputs */
+  --af-radius-2: 4px;   /* cards (upper bound) */
+
+  /* -------------------------------------------------------
+     BORDERS
+  ------------------------------------------------------- */
+  --af-stroke-hairline: 1px solid var(--af-rule);
+  --af-stroke-regular:  1px solid var(--af-rule-strong);
+  --af-stroke-on-light: 1px solid var(--af-fg);
+
+  /* -------------------------------------------------------
+     MOTION — slow, composed. No bounces. Fades, long eases.
+  ------------------------------------------------------- */
+  --af-ease:        cubic-bezier(0.22, 0.61, 0.36, 1);
+  --af-dur-fast:    180ms;
+  --af-dur-base:    320ms;
+  --af-dur-slow:    560ms;
+
+  /* -------------------------------------------------------
+     Z
+  ------------------------------------------------------- */
+  --af-z-nav:    100;
+  --af-z-modal:  1000;
+}
+
+/* =========================================================
+   SEMANTIC ELEMENT STYLES
+   ---------------------------------------------------------
+   Apply .af-scope to any root to opt in. Page-level styles
+   also apply directly to body if you include this file.
+========================================================= */
+
+html, body {
+  background: var(--af-bg);
+  color: var(--af-fg);
+  font-family: var(--af-font-jp-sans);
+  font-size: var(--af-fs-body-lg);
+  line-height: var(--af-lh-body);
+  letter-spacing: var(--af-ls-body);
+  font-weight: 300;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Display — English large */
+.af-display,
+h1.af-h1 {
+  font-family: var(--af-font-display);
+  font-weight: 400;
+  font-size: var(--af-fs-display-xl);
+  line-height: var(--af-lh-display);
+  letter-spacing: var(--af-ls-display);
+  color: var(--af-fg);
+}
+
+/* Section heading EN (two-line with JP sub underneath) */
+.af-section-en {
+  font-family: var(--af-font-display);
+  font-weight: 400;
+  font-size: var(--af-fs-display-lg);
+  line-height: 1.1;
+  letter-spacing: var(--af-ls-display);
+  color: var(--af-fg);
+}
+
+/* Section sub JP (sits under the EN display, muted) */
+.af-section-jp {
+  font-family: var(--af-font-jp-serif);
+  font-weight: 400;
+  font-size: var(--af-fs-body-lg);
+  line-height: var(--af-lh-heading);
+  letter-spacing: var(--af-ls-heading);
+  color: var(--af-fg-muted);
+}
+
+/* JP serif headings (inline body-heading, e.g. "私たちの理念") */
+h2.af-h2, .af-heading-jp-lg {
+  font-family: var(--af-font-jp-serif);
+  font-weight: 400;
+  font-size: var(--af-fs-heading-lg);
+  line-height: var(--af-lh-heading);
+  letter-spacing: var(--af-ls-heading);
+  color: var(--af-fg);
+}
+
+h3.af-h3, .af-heading-jp-md {
+  font-family: var(--af-font-jp-serif);
+  font-weight: 400;
+  font-size: var(--af-fs-heading-md);
+  line-height: var(--af-lh-heading);
+  letter-spacing: var(--af-ls-heading);
+  color: var(--af-fg);
+}
+
+/* Body JP — the workhorse */
+p.af-p, .af-body {
+  font-family: var(--af-font-jp-sans);
+  font-weight: 300;
+  font-size: var(--af-fs-body-lg);
+  line-height: var(--af-lh-body);
+  letter-spacing: var(--af-ls-body);
+  color: var(--af-fg);
+}
+
+.af-body-muted {
+  color: var(--af-fg-muted);
+}
+
+/* Captions */
+.af-caption {
+  font-family: var(--af-font-jp-sans);
+  font-size: var(--af-fs-body-sm);
+  color: var(--af-fg-subtle);
+  letter-spacing: var(--af-ls-body);
+  line-height: 1.7;
+}
+
+/* Romanised sub-label (names, Since XXXX) */
+.af-sub-latin {
+  font-family: var(--af-font-sub);
+  font-style: italic;
+  font-weight: 400;
+  font-size: var(--af-fs-body-xs);
+  letter-spacing: var(--af-ls-sub);
+  color: var(--af-fg-muted);
+}
+
+/* Eyebrow / nav label — tiny, wide-tracked uppercase */
+.af-eyebrow {
+  font-family: var(--af-font-jp-sans);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: var(--af-ls-eyebrow);
+  text-transform: uppercase;
+  color: var(--af-fg-muted);
+}
+
+/* Since year (Cormorant italic, quiet grey) */
+.af-since {
+  font-family: var(--af-font-sub);
+  font-style: italic;
+  font-size: 14px;
+  letter-spacing: var(--af-ls-sub);
+  color: var(--af-fg-muted);
+}
+
+/* Divider */
+.af-rule    { border: 0; border-top: var(--af-stroke-hairline); }
+.af-rule-strong { border: 0; border-top: var(--af-stroke-regular); }
+
+/* Links — underline on hover, no color shift */
+a.af-link {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color var(--af-dur-base) var(--af-ease),
+              opacity    var(--af-dur-base) var(--af-ease);
+}
+a.af-link:hover { border-bottom-color: currentColor; }
+
+/* Selection — quiet warm tint */
+::selection { background: rgba(232, 116, 60, 0.35); color: #fff; }
