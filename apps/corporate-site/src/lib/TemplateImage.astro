@@ -6,13 +6,22 @@
  *
  * The template directory is the single source of truth for assets.
  * This helper keeps JSON strings portable while getting Astro's
- * image optimisation (srcset, WebP/AVIF, content-hashed filenames).
+ * image optimisation (srcset, WebP, content-hashed filenames).
+ *
+ * The glob uses Vite's array+negation syntax to exclude reference-only
+ * assets (e.g. venues/*_detail_*.png) that live in the template for
+ * future use but are not referenced by any current component. Files
+ * matching the negated pattern are NOT emitted to dist/, avoiding dead
+ * weight in the build output.
  */
 import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 
 const images = import.meta.glob<{ default: ImageMetadata }>(
-  '../../../../templates/ace-factory/assets/**/*.png',
+  [
+    '../../../../templates/ace-factory/assets/**/*.png',
+    '!../../../../templates/ace-factory/assets/venues/*_detail_*.png',
+  ],
   { eager: true },
 );
 

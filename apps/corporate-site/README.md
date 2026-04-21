@@ -40,7 +40,8 @@ apps/corporate-site/
 ├── astro.config.mjs       ← Astro configuration
 ├── package.json
 ├── tsconfig.json
-├── public/                ← Static files served as-is (robots.txt, favicon.ico)
+├── public/                ← Static files served as-is (robots.txt, favicon.svg)
+├── functions/             ← Cloudflare Pages Functions (Basic Auth middleware)
 └── src/
     ├── content.config.ts  ← Content Collections schema (Zod)
     ├── layouts/
@@ -104,13 +105,85 @@ dist/
 ├── index.html
 ├── venues/
 │   └── reims/index.html
-├── _astro/                ← Hashed CSS / JS / optimised images (WebP/AVIF)
+├── _astro/                ← Hashed CSS / JS / optimised images (WebP)
 └── robots.txt
 ```
 
-Deploy by pointing Cloudflare Pages at this repo with:
-- **Build command**: `cd apps/corporate-site && npm install && npm run build`
-- **Output directory**: `apps/corporate-site/dist`
+See [Cloudflare Pages deployment](#cloudflare-pages-deployment) below for the full deploy procedure.
+
+## Cloudflare Pages deployment
+
+### Required settings
+
+| Field | Value |
+|---|---|
+| Production branch | `main` |
+| Root directory | **`apps/corporate-site`** (important — see below) |
+| Build command | `npm install && npm run build` |
+| Build output directory | `dist` |
+| Framework preset | **None** (manual config; Astro preset assumes repo root) |
+| Node.js version | `22` (set via `NODE_VERSION` env var) |
+
+> **Why Root directory must be `apps/corporate-site`**: Cloudflare Pages discovers the `functions/` directory relative to the configured Root directory. Since our Basic Auth middleware lives at `apps/corporate-site/functions/_middleware.js`, Cloudflare won't find it unless Root directory points inside the app.
+
+### Required environment variables
+
+Three variables must be configured in the Cloudflare Pages dashboard before the site is usable:
+
+| Name | Purpose | When to set |
+|---|---|---|
+| `BASIC_AUTH_USER` | Basic Auth username | Before first public deploy. Any non-empty string. |
+| `BASIC_AUTH_PASS` | Basic Auth password | Before first public deploy. Treat as a secret. |
+| `SITE_URL` | Absolute origin used for canonical URLs, OG `og:url`, Twitter Card URLs | After a custom domain is connected. Until then, Astro falls back to `CF_PAGES_URL` (auto-injected by Cloudflare) so canonicals remain correct on preview URLs. |
+| `NODE_VERSION` | Pin Node major version for the build | Before first deploy. Set to `22`. |
+
+#### Setting variables in the dashboard
+
+1. Open the Pages project: **Dashboard → Workers & Pages → `<your-project>`**
+2. Navigate to **Settings → Environment variables**
+3. Select the environment scope: **Production** and/or **Preview**
+4. For each variable:
+   - Click **Add variable**
+   - Enter the name (e.g. `BASIC_AUTH_PASS`)
+   - Enter the value
+   - For `BASIC_AUTH_PASS`, tick **Encrypt** so the value is stored as a secret (redacted in logs, not visible after save)
+5. Click **Save**
+6. **Redeploy** the project (**Deployments → latest → Retry deployment**) so new builds pick up the variables at build time
+
+`BASIC_AUTH_USER`/`BASIC_AUTH_PASS` are read at *request* time by the Function, so they do not require a rebuild — but new deploys may happen first if you change them together with other settings.
+
+### Basic Auth behaviour
+
+The site is gated by `apps/corporate-site/functions/_middleware.js` which runs before any static asset is served. Its behaviour is deliberately **fail-closed**:
+
+| State | Response | Notes |
+|---|---|---|
+| `BASIC_AUTH_USER` or `BASIC_AUTH_PASS` missing / empty | **503 Service Unavailable** with an explanatory message | Prevents accidental public exposure on misconfigured deploys |
+| `Authorization` header missing or malformed | **401** with `WWW-Authenticate: Basic realm="Ace Factory"` — browser shows the native credential dialog | Standard HTTP Basic flow |
+| Credentials do not match | **401** with the same challenge header | Username and password are compared in **constant time** to resist timing attacks |
+| Credentials match | Forwarded to the static asset (normal 200 response) | |
+
+### Enabling / disabling Basic Auth
+
+Because the middleware is fail-closed, there are three possible states:
+
+| Goal | How |
+|---|---|
+| **Gate the site (default)** | Keep `functions/_middleware.js` in the repo. Set `BASIC_AUTH_USER` and `BASIC_AUTH_PASS` in the dashboard. |
+| **Keep the site locked without auth dialog** | Keep `functions/_middleware.js` but unset the env vars → all requests get 503. Useful for "indefinitely unavailable" states. |
+| **Publish publicly (no auth)** | Delete `apps/corporate-site/functions/_middleware.js`, commit, and push. Cloudflare auto-redeploys without a middleware, and the site becomes public. |
+
+Don't try to disable auth by leaving the file but manipulating env vars — there is no "off" env var. The gate lives in code, not config, to make the public/private state reviewable in version control.
+
+### First-deploy checklist
+
+1. Push latest `main` (this repo already has the Function and Astro config)
+2. Create the Cloudflare Pages project with the settings above
+3. Set `NODE_VERSION=22`, `BASIC_AUTH_USER`, `BASIC_AUTH_PASS` in **Production** and **Preview** env scopes
+4. Trigger a deploy; wait for green build
+5. Visit the `*.pages.dev` URL — browser should prompt for Basic Auth
+6. Enter the credentials you set; the full site should load
+7. (Optional) Connect a custom domain and set `SITE_URL` to its `https://` origin, then redeploy
 
 ## Roadmap
 
