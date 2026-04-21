@@ -1,0 +1,78 @@
+---
+import '../styles/global.css';
+
+export interface Props {
+  /** <title> text. Required. */
+  title: string;
+  /** <meta name="description"> and og:description. */
+  description?: string;
+  /** Absolute or site-root-relative path to an OG/Twitter card image (1200×630 recommended). */
+  ogImage?: string;
+  /** og:type — 'website' for marketing pages, 'article' for editorial/news. */
+  ogType?: 'website' | 'article';
+  /** Canonical URL override. Defaults to current page URL based on `site` config. */
+  canonical?: string;
+  /** Apply <meta name="robots" content="noindex"> for in-progress pages. */
+  noIndex?: boolean;
+  /** Language attribute on <html>. Defaults to 'ja'. */
+  lang?: string;
+}
+
+const {
+  title,
+  description = 'エースファクトリー — 北新地を拠点とするナイトエンターテインメント。感謝を基盤に、人と向き合う。',
+  ogImage = '/og-default.png',
+  ogType = 'website',
+  canonical,
+  noIndex = false,
+  lang = 'ja',
+} = Astro.props;
+
+const siteName = 'Ace Factory';
+const canonicalUrl = canonical ?? new URL(Astro.url.pathname, Astro.site ?? 'https://afactory.example.com').toString();
+const ogImageUrl = ogImage.startsWith('http')
+  ? ogImage
+  : new URL(ogImage, Astro.site ?? 'https://afactory.example.com').toString();
+---
+<!DOCTYPE html>
+<html lang={lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {noIndex && <meta name="robots" content="noindex,nofollow" />}
+    <link rel="canonical" href={canonicalUrl} />
+
+    {/* Favicon — placeholder SVG; swap for real artwork when available */}
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    {/* Open Graph */}
+    <meta property="og:type" content={ogType} />
+    <meta property="og:site_name" content={siteName} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:locale" content="ja_JP" />
+
+    {/* Twitter Card */}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+
+    {/* Google Fonts — Cormorant Garamond / Noto Serif JP / Noto Sans JP */}
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Noto+Sans+JP:wght@300;400;500;700&family=Noto+Serif+JP:wght@300;400;500;600&display=swap"
+    />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

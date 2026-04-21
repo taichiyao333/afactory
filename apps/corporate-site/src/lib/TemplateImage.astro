@@ -1,0 +1,64 @@
+---
+/**
+ * TemplateImage — resolves an asset path string from content JSON
+ * (e.g. "assets/logos/club_reims_logo.png") to an optimised <Image>
+ * pulled out of templates/ace-factory/assets/.
+ *
+ * The template directory is the single source of truth for assets.
+ * This helper keeps JSON strings portable while getting Astro's
+ * image optimisation (srcset, WebP/AVIF, content-hashed filenames).
+ */
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+const images = import.meta.glob<{ default: ImageMetadata }>(
+  '../../../../templates/ace-factory/assets/**/*.png',
+  { eager: true },
+);
+
+export interface Props {
+  /** Template-relative path, e.g. "assets/logos/club_reims_logo.png" */
+  src: string;
+  alt: string;
+  width?: number;
+  height?: number;
+  loading?: 'lazy' | 'eager';
+  decoding?: 'async' | 'sync' | 'auto';
+  fetchpriority?: 'high' | 'low' | 'auto';
+  class?: string;
+  style?: string;
+}
+
+const {
+  src,
+  alt,
+  width,
+  height,
+  loading = 'lazy',
+  decoding = 'async',
+  fetchpriority,
+  class: className,
+  style,
+} = Astro.props;
+
+const key = `../../../../templates/ace-factory/${src}`;
+const entry = images[key];
+if (!entry) {
+  throw new Error(
+    `TemplateImage: asset not found at "${src}" (resolved to "${key}"). ` +
+      `Available keys: ${Object.keys(images).join(', ')}`,
+  );
+}
+const resolved = entry.default;
+---
+<Image
+  src={resolved}
+  alt={alt}
+  width={width ?? resolved.width}
+  height={height ?? resolved.height}
+  loading={loading}
+  decoding={decoding}
+  fetchpriority={fetchpriority}
+  class={className}
+  style={style}
+/>
