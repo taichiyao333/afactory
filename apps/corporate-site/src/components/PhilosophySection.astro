@@ -1,0 +1,55 @@
+---
+import SectionHeading from './SectionHeading.astro';
+import GhostButton from './GhostButton.astro';
+
+export interface Props {
+  heading: { en: string; jp: string };
+  quote: string;
+  body: string;
+  viewMoreHref: string;
+}
+const { heading, quote, body, viewMoreHref } = Astro.props;
+---
+<section id="aboutus" class="philosophy">
+  <SectionHeading en={heading.en} jp={heading.jp} />
+  <div class="philosophy__inner">
+    <h2 class="philosophy__quote" set:html={quote.replace(/\n/g, '<br/>')} />
+    <p class="philosophy__body">{body}</p>
+    <div class="philosophy__cta">
+      <GhostButton href={viewMoreHref}>More</GhostButton>
+    </div>
+  </div>
+</section>
+
+<style>
+  .philosophy {
+    background: var(--af-bg);
+    padding: var(--af-section-y-lg) var(--af-pad-x-desktop);
+    max-width: var(--af-container-max);
+    margin: 0 auto;
+  }
+  .philosophy__inner {
+    max-width: 720px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .philosophy__quote {
+    font-family: var(--af-font-jp-serif);
+    font-weight: 400;
+    font-size: var(--af-fs-heading-lg);
+    line-height: 1.8;
+    letter-spacing: var(--af-ls-heading);
+    color: var(--af-fg);
+    margin: 0;
+  }
+  .philosophy__body {
+    font-family: var(--af-font-jp-sans);
+    font-weight: 300;
+    font-size: var(--af-fs-body-lg);
+    line-height: var(--af-lh-body);
+    letter-spacing: var(--af-ls-body);
+    color: var(--af-fg);
+    margin-top: 40px;
+  }
+  .philosophy__cta { margin-top: 48px; }
+</style>

@@ -1,0 +1,89 @@
+---
+/**
+ * RecruitBand — PDF-faithful thin orange strip + two inline CTAs.
+ */
+export interface Props {
+  heading: { en: string; jp: string };
+  ctas: { jp: string; en: string; href: string }[];
+}
+const { heading, ctas } = Astro.props;
+---
+<section id="recruit" class="recruit">
+  <div class="recruit__inner">
+    <div class="recruit__intro">
+      <div class="recruit__en">{heading.en}</div>
+      <div class="recruit__jp">{heading.jp}</div>
+    </div>
+    <div class="recruit__ctas">
+      {ctas.map((c) => (
+        <a href={c.href} class="recruit__cta">
+          <span>{c.jp}</span>
+          <span class="recruit__cta-en">{c.en}</span>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .recruit {
+    background: var(--af-cta);
+    padding: 48px var(--af-pad-x-desktop);
+  }
+  .recruit__inner {
+    max-width: var(--af-container-max);
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    column-gap: 48px;
+    row-gap: 28px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  .recruit__intro { color: var(--af-fg); }
+  .recruit__en {
+    font-family: var(--af-font-display);
+    font-weight: 400;
+    font-size: 44px;
+    letter-spacing: 0.04em;
+    line-height: 1;
+  }
+  .recruit__jp {
+    font-family: var(--af-font-jp-serif);
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    margin-top: 10px;
+    opacity: 0.9;
+  }
+  .recruit__ctas {
+    display: flex;
+    column-gap: 16px;
+    row-gap: 12px;
+    flex-wrap: wrap;
+  }
+  .recruit__cta {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 12px 24px;
+    border: 1px solid var(--af-fg);
+    color: var(--af-fg);
+    text-decoration: none;
+    border-radius: var(--af-radius-1);
+    font-family: var(--af-font-jp-sans);
+    font-size: 13px;
+    letter-spacing: var(--af-ls-button);
+    line-height: 1.4;
+    white-space: nowrap;
+    transition: background var(--af-dur-base) var(--af-ease);
+  }
+  .recruit__cta:hover { background: var(--af-overlay-10); }
+  .recruit__cta-en {
+    font-family: var(--af-font-display);
+    font-style: italic;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    opacity: 0.85;
+    margin-top: 4px;
+  }
+</style>

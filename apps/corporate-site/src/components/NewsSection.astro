@@ -1,0 +1,49 @@
+---
+import SectionHeading from './SectionHeading.astro';
+import GhostButton from './GhostButton.astro';
+import NewsItem from './NewsItem.astro';
+
+export interface Props {
+  heading: { en: string; jp: string };
+  viewAllHref: string;
+  items: {
+    venue: string;
+    title: string;
+    date: string;
+    image: string;
+    href: string;
+  }[];
+}
+const { heading, viewAllHref, items } = Astro.props;
+---
+<section id="news" class="news">
+  <div class="news__inner">
+    <SectionHeading en={heading.en} jp={heading.jp} />
+    <div class="news__grid">
+      {items.map((n) => <NewsItem {...n} />)}
+    </div>
+    <div class="news__cta">
+      <GhostButton href={viewAllHref}>View&nbsp;All</GhostButton>
+    </div>
+  </div>
+</section>
+
+<style>
+  .news {
+    background: var(--af-bg);
+    padding: var(--af-section-y-lg) var(--af-pad-x-desktop);
+  }
+  .news__inner {
+    max-width: var(--af-container-max);
+    margin: 0 auto;
+  }
+  .news__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--af-component-gap-lg);
+  }
+  .news__cta {
+    margin-top: 64px;
+    text-align: center;
+  }
+</style>

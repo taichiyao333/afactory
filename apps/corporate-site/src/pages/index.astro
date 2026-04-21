@@ -1,0 +1,16 @@
+---
+import { getEntry } from 'astro:content';
+import VenueTopPage from '../components/VenueTopPage.astro';
+
+// "/" — corporate top page. Provisionally rendered against reims.json
+// until a dedicated corporate.json is added (see HANDOFF.md).
+const reims = await getEntry('sites', 'reims');
+if (!reims) {
+  throw new Error('Content collection "sites" has no entry "reims". Check templates/ace-factory/content/sites/reims.json');
+}
+---
+<VenueTopPage
+  data={reims.data}
+  pageTitle="Ace Factory — 感謝を基盤に、人と向き合う"
+  pageDescription="エースファクトリーは、大阪・北新地で6店舗を運営するナイトエンターテインメントカンパニー。感謝を基盤に、人と向き合う。"
+/>

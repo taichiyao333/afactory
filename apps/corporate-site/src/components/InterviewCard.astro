@@ -1,0 +1,81 @@
+---
+import TemplateImage from '../lib/TemplateImage.astro';
+
+export interface Props {
+  no: string;
+  image: string;
+  venue: string;
+  nameJa: string;
+  nameEn: string;
+  href: string;
+}
+const { no, image, venue, nameJa, nameEn, href } = Astro.props;
+const trackedEn = nameEn.split('').join(' ');
+---
+<a href={href} class="interview-card">
+  <div class="interview-card__media">
+    <TemplateImage src={image} alt={nameJa} />
+    {no && <div class="interview-card__no">{no}</div>}
+  </div>
+  <div class="interview-card__caption">
+    <div class="interview-card__venue">{venue}</div>
+    <div class="interview-card__name-ja">{nameJa}</div>
+    <div class="interview-card__name-en">{trackedEn}</div>
+  </div>
+</a>
+
+<style>
+  .interview-card {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+  }
+  .interview-card__media {
+    position: relative;
+    aspect-ratio: 3 / 4;
+    background: var(--af-surface-sub);
+    filter: grayscale(0.1) brightness(0.95);
+    overflow: hidden;
+  }
+  .interview-card__media :global(img) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .interview-card__no {
+    position: absolute;
+    top: 14px;
+    left: 16px;
+    font-family: var(--af-font-display);
+    font-size: 28px;
+    color: var(--af-fg);
+    letter-spacing: 0.04em;
+    opacity: 0.9;
+  }
+  .interview-card__caption { padding-top: 16px; }
+  .interview-card__venue {
+    font-family: var(--af-font-display);
+    font-style: italic;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    color: var(--af-fg-subtle);
+    text-transform: uppercase;
+  }
+  .interview-card__name-ja {
+    font-family: var(--af-font-jp-serif);
+    font-size: 16px;
+    color: var(--af-fg);
+    margin-top: 6px;
+    letter-spacing: var(--af-ls-heading);
+  }
+  .interview-card__name-en {
+    font-family: var(--af-font-display);
+    font-style: italic;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    color: var(--af-fg-muted);
+    margin-top: 4px;
+  }
+</style>

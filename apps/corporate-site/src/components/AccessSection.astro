@@ -1,0 +1,36 @@
+---
+import SectionHeading from './SectionHeading.astro';
+import AccessCard from './AccessCard.astro';
+
+export interface Props {
+  heading: { en: string; jp: string };
+  venues: {
+    venueName: string;
+    venueReading: string;
+    since: string;
+    address: string;
+    phone: string;
+    url: string;
+  }[];
+}
+const { heading, venues } = Astro.props;
+---
+<section id="access" class="access">
+  <div class="access__inner">
+    <SectionHeading en={heading.en} jp={heading.jp} />
+    <div>
+      {venues.map((v, i) => <AccessCard {...v} isFirst={i === 0} />)}
+    </div>
+  </div>
+</section>
+
+<style>
+  .access {
+    background: var(--af-bg);
+    padding: var(--af-section-y-lg) var(--af-pad-x-desktop);
+  }
+  .access__inner {
+    max-width: var(--af-container-max);
+    margin: 0 auto;
+  }
+</style>

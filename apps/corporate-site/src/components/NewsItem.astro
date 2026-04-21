@@ -1,0 +1,69 @@
+---
+import TemplateImage from '../lib/TemplateImage.astro';
+
+export interface Props {
+  date: string;
+  venue: string;
+  title: string;
+  image: string;
+  href: string;
+}
+const { date, venue, title, image, href } = Astro.props;
+---
+<a href={href} class="news-item">
+  <div class="news-item__media">
+    <TemplateImage src={image} alt={title} />
+  </div>
+  <div class="news-item__caption">
+    <div class="news-item__venue">{venue}</div>
+    <div class="news-item__title">{title}</div>
+    <div class="news-item__date">{date}</div>
+  </div>
+</a>
+
+<style>
+  .news-item {
+    color: var(--af-fg);
+    text-decoration: none;
+    display: block;
+  }
+  .news-item__media {
+    position: relative;
+    aspect-ratio: 4 / 5;
+    background: var(--af-surface-sub);
+    overflow: hidden;
+  }
+  .news-item__media :global(img) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .news-item__caption { padding-top: 18px; }
+  .news-item__venue {
+    font-family: var(--af-font-display);
+    font-style: italic;
+    font-size: 12px;
+    letter-spacing: 0.22em;
+    color: var(--af-fg-subtle);
+    text-transform: uppercase;
+  }
+  .news-item__title {
+    font-family: var(--af-font-jp-serif);
+    font-size: var(--af-fs-body-md);
+    line-height: 1.8;
+    letter-spacing: var(--af-ls-body);
+    color: var(--af-fg);
+    margin-top: 8px;
+    font-weight: 300;
+  }
+  .news-item__date {
+    font-family: var(--af-font-display);
+    font-style: italic;
+    font-size: 13px;
+    color: var(--af-fg-muted);
+    margin-top: 10px;
+    letter-spacing: 0.08em;
+  }
+</style>

@@ -1,0 +1,90 @@
+---
+import TemplateImage from '../lib/TemplateImage.astro';
+
+export interface Props {
+  logos: { src: string; height: number; alt: string }[];
+  links: { label: string; href: string }[];
+  copyright: string;
+  privacyHref: string;
+}
+const { logos, links, copyright, privacyHref } = Astro.props;
+---
+<footer class="footer">
+  <div class="footer__inner">
+    <div class="footer__logos">
+      {logos.map((logo) => (
+        <div class="footer__logo" style={`--logo-h: ${logo.height}px`}>
+          <TemplateImage src={logo.src} alt={logo.alt} />
+        </div>
+      ))}
+    </div>
+    <div class="footer__meta">
+      <div class="footer__links">
+        {links.map((l) => (
+          <a href={l.href} class="footer__link">{l.label}</a>
+        ))}
+      </div>
+      <div class="footer__legal">
+        <span>{copyright}</span>
+        <a href={privacyHref} class="footer__privacy">Privacy Policy</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background: var(--af-surface-sub);
+    padding: 80px var(--af-pad-x-desktop) 40px;
+    border-top: 1px solid var(--af-rule);
+  }
+  .footer__inner {
+    max-width: var(--af-container-max);
+    margin: 0 auto;
+  }
+  .footer__logos {
+    display: flex;
+    gap: 40px;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-bottom: 48px;
+    border-bottom: 1px solid var(--af-rule);
+  }
+  .footer__logo :global(img) {
+    height: var(--logo-h, 26px);
+    width: auto;
+    opacity: 0.9;
+  }
+  .footer__meta {
+    padding-top: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 24px;
+  }
+  .footer__links {
+    display: flex;
+    gap: 32px;
+  }
+  .footer__link {
+    color: var(--af-fg-muted);
+    text-decoration: none;
+    font-family: var(--af-font-display);
+    font-size: 13px;
+    letter-spacing: 0.08em;
+  }
+  .footer__legal {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+    color: var(--af-fg-subtle);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+  }
+  .footer__privacy {
+    color: var(--af-fg-subtle);
+    text-decoration: none;
+  }
+</style>

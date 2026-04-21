@@ -1,0 +1,99 @@
+---
+export interface Props {
+  venueName: string;
+  venueReading: string;
+  since: string;
+  address: string;
+  phone: string;
+  url?: string | null;
+  isFirst?: boolean;
+}
+const {
+  venueName,
+  venueReading,
+  since,
+  address,
+  phone,
+  url,
+  isFirst = false,
+} = Astro.props;
+const hasUrl = !!url;
+---
+{hasUrl ? (
+  <a
+    href={url}
+    target="_blank"
+    rel="noreferrer"
+    class:list={['access-card', { 'access-card--first': isFirst }]}
+  >
+    <div class="access-card__row">
+      <div class="access-card__name">{venueName}</div>
+      <div class="access-card__reading">（{venueReading}）</div>
+      {since && <div class="access-card__since">{since}</div>}
+    </div>
+    <div class="access-card__address">{address}</div>
+    <div class="access-card__phone">{phone}</div>
+  </a>
+) : (
+  <div class:list={['access-card', { 'access-card--first': isFirst }]}>
+    <div class="access-card__row">
+      <div class="access-card__name">{venueName}</div>
+      <div class="access-card__reading">（{venueReading}）</div>
+      {since && <div class="access-card__since">{since}</div>}
+    </div>
+    <div class="access-card__address">{address}</div>
+    <div class="access-card__phone">{phone}</div>
+  </div>
+)}
+
+<style>
+  .access-card {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    border-top: 1px solid var(--af-rule);
+    padding: 32px 0;
+  }
+  .access-card--first { border-top: 1px solid var(--af-rule-strong); }
+  .access-card__row {
+    display: flex;
+    align-items: baseline;
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+  .access-card__name {
+    font-family: var(--af-font-display);
+    font-size: 28px;
+    color: var(--af-fg);
+    letter-spacing: 0.08em;
+  }
+  .access-card__reading {
+    font-family: var(--af-font-jp-serif);
+    font-size: var(--af-fs-body-sm);
+    color: var(--af-fg-muted);
+    letter-spacing: var(--af-ls-heading);
+  }
+  .access-card__since {
+    font-family: var(--af-font-sub);
+    font-style: italic;
+    font-size: var(--af-fs-body-sm);
+    color: var(--af-fg-muted);
+    letter-spacing: var(--af-ls-sub);
+    margin-left: auto;
+  }
+  .access-card__address {
+    color: var(--af-fg);
+    font-family: var(--af-font-jp-sans);
+    font-size: var(--af-fs-body-md);
+    line-height: var(--af-lh-body);
+    margin-top: 14px;
+    font-weight: 300;
+  }
+  .access-card__phone {
+    color: var(--af-fg-muted);
+    font-family: var(--af-font-jp-sans);
+    font-size: var(--af-fs-body-sm);
+    margin-top: 4px;
+    letter-spacing: 0.06em;
+  }
+</style>

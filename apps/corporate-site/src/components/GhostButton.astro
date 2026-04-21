@@ -1,0 +1,38 @@
+---
+/**
+ * GhostButton — white-outlined transparent button.
+ * The default CTA across the site (reserves filled orange for Recruit only).
+ */
+export interface Props {
+  href?: string;
+  class?: string;
+}
+const { href, class: className } = Astro.props;
+---
+{href ? (
+  <a href={href} class:list={['ghost-btn', className]}>
+    <slot />
+  </a>
+) : (
+  <button type="button" class:list={['ghost-btn', className]}>
+    <slot />
+  </button>
+)}
+
+<style>
+  .ghost-btn {
+    display: inline-block;
+    padding: 14px 38px;
+    border-radius: var(--af-radius-1);
+    border: 1px solid var(--af-fg);
+    color: var(--af-fg);
+    background: transparent;
+    font-family: var(--af-font-jp-sans);
+    font-size: 13px;
+    letter-spacing: 0.14em;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background var(--af-dur-base) var(--af-ease);
+  }
+  .ghost-btn:hover { background: var(--af-overlay-10); }
+</style>

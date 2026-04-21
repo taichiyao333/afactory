@@ -1,0 +1,85 @@
+---
+import SectionHeading from './SectionHeading.astro';
+import GhostButton from './GhostButton.astro';
+import VenueCard from './VenueCard.astro';
+
+export interface Props {
+  heading: { en: string; jp: string };
+  quote: string;
+  body: string;
+  viewMoreHref: string;
+  allVenuesLabel: string;
+  venues: { name: string; url: string; logo: string | null; interior: string }[];
+}
+const { heading, quote, body, viewMoreHref, allVenuesLabel, venues } = Astro.props;
+---
+<section id="service" class="service">
+  <div class="service__inner">
+    <SectionHeading en={heading.en} jp={heading.jp} />
+
+    <div class="service__intro">
+      <h2 class="service__quote" set:html={quote.replace(/\n/g, '<br/>')} />
+      <p class="service__body">{body}</p>
+      <div class="service__cta">
+        <GhostButton href={viewMoreHref}>More</GhostButton>
+      </div>
+    </div>
+
+    <div class="service__venues">
+      <div class="service__venues-label">{allVenuesLabel}</div>
+      <div class="service__venue-grid">
+        {venues.map((v) => <VenueCard {...v} />)}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .service {
+    background: var(--af-bg);
+    padding: var(--af-section-y-lg) var(--af-pad-x-desktop);
+  }
+  .service__inner {
+    max-width: var(--af-container-max);
+    margin: 0 auto;
+  }
+  .service__intro {
+    max-width: 720px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .service__quote {
+    font-family: var(--af-font-jp-serif);
+    font-weight: 400;
+    font-size: var(--af-fs-heading-md);
+    line-height: 1.8;
+    letter-spacing: var(--af-ls-heading);
+    color: var(--af-fg);
+    margin: 0;
+  }
+  .service__body {
+    font-family: var(--af-font-jp-sans);
+    font-weight: 300;
+    font-size: var(--af-fs-body-md);
+    line-height: var(--af-lh-body);
+    letter-spacing: var(--af-ls-body);
+    color: var(--af-fg-muted);
+    margin-top: 32px;
+  }
+  .service__cta { margin-top: 32px; }
+
+  .service__venues { margin-top: 120px; }
+  .service__venues-label {
+    text-align: center;
+    font-family: var(--af-font-display);
+    font-size: 28px;
+    letter-spacing: 0.24em;
+    color: var(--af-fg);
+    margin-bottom: 56px;
+  }
+  .service__venue-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--af-component-gap-lg);
+  }
+</style>

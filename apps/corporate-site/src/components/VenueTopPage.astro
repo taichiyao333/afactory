@@ -1,0 +1,42 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from './Nav.astro';
+import Hero from './Hero.astro';
+import PhilosophySection from './PhilosophySection.astro';
+import ServiceSection from './ServiceSection.astro';
+import MessageSection from './MessageSection.astro';
+import InterviewSection from './InterviewSection.astro';
+import RecruitBand from './RecruitBand.astro';
+import NewsSection from './NewsSection.astro';
+import AccessSection from './AccessSection.astro';
+import Footer from './Footer.astro';
+import type { CollectionEntry } from 'astro:content';
+
+/**
+ * VenueTopPage — full top-page composition.
+ * Shared between "/" and "/venues/[slug]" so the layout stays in lockstep.
+ */
+export interface Props {
+  data: CollectionEntry<'sites'>['data'];
+  pageTitle?: string;
+  pageDescription?: string;
+}
+const { data, pageTitle, pageDescription } = Astro.props;
+
+const title = pageTitle ?? `${data.venue.nameEn} | Ace Factory`;
+const description =
+  pageDescription ??
+  `${data.venue.nameEn}（${data.venue.reading}） ${data.venue.since} — エースファクトリー。${data.venue.address}`;
+---
+<BaseLayout title={title} description={description}>
+  <Nav items={data.nav.items} />
+  <Hero {...data.hero} />
+  <PhilosophySection {...data.philosophy} />
+  <ServiceSection {...data.service} />
+  <MessageSection {...data.message} />
+  <InterviewSection {...data.interview} />
+  <RecruitBand {...data.recruit} />
+  <NewsSection {...data.news} />
+  <AccessSection {...data.access} />
+  <Footer {...data.footer} />
+</BaseLayout>

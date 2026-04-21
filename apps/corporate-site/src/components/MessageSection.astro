@@ -1,0 +1,129 @@
+---
+import TemplateImage from '../lib/TemplateImage.astro';
+
+/**
+ * MessageSection — 代表メッセージ
+ */
+export interface Props {
+  portrait: string;
+  name: string;
+  nameEn: string;
+  role: string;
+  quote: string;
+  body: string;
+}
+const { portrait, name, nameEn, role, quote, body } = Astro.props;
+const trackedEn = nameEn.split('').join(' ');
+---
+<section id="message" class="message">
+  <div class="message__grid">
+    <div class="message__portrait">
+      <TemplateImage src={portrait} alt={name} />
+    </div>
+    <div class="message__body">
+      <div class="message__display">Message</div>
+      <div class="message__display-jp">代表メッセージ</div>
+
+      <div class="message__meta">
+        <div class="message__meta-row">
+          <div class="message__name">{name}</div>
+          <div class="message__role">/ {role}</div>
+        </div>
+        <div class="message__name-en">{trackedEn}</div>
+      </div>
+
+      <h2 class="message__quote">{quote}</h2>
+      <p class="message__text">{body}</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .message {
+    background: var(--af-surface-sub);
+    padding: var(--af-section-y-lg) var(--af-pad-x-desktop);
+  }
+  .message__grid {
+    max-width: var(--af-container-max);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1.3fr;
+    gap: 80px;
+    align-items: center;
+  }
+  .message__portrait {
+    position: relative;
+    aspect-ratio: 3 / 4;
+    background: #111;
+    overflow: hidden;
+  }
+  .message__portrait :global(img) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .message__display {
+    font-family: var(--af-font-display);
+    font-size: var(--af-fs-display-lg);
+    letter-spacing: var(--af-ls-display);
+    color: var(--af-fg);
+    line-height: 1.1;
+  }
+  .message__display-jp {
+    font-family: var(--af-font-jp-serif);
+    font-size: var(--af-fs-body-sm);
+    color: var(--af-fg-muted);
+    margin-top: 10px;
+    letter-spacing: var(--af-ls-heading);
+  }
+  .message__meta {
+    margin-top: 40px;
+    padding-top: 32px;
+    border-top: 1px solid var(--af-rule);
+  }
+  .message__meta-row {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .message__name {
+    font-family: var(--af-font-jp-serif);
+    font-size: var(--af-fs-heading-sm);
+    color: var(--af-fg);
+    letter-spacing: var(--af-ls-heading);
+  }
+  .message__role {
+    color: var(--af-fg-subtle);
+    font-size: 12px;
+  }
+  .message__name-en {
+    font-family: var(--af-font-sub);
+    font-style: italic;
+    font-size: var(--af-fs-body-sm);
+    color: var(--af-fg-muted);
+    letter-spacing: 0.18em;
+    margin-top: 6px;
+  }
+  .message__quote {
+    font-family: var(--af-font-jp-serif);
+    font-weight: 400;
+    font-size: 26px;
+    line-height: 1.7;
+    letter-spacing: var(--af-ls-heading);
+    color: var(--af-fg);
+    margin: 36px 0 24px;
+  }
+  .message__text {
+    font-family: var(--af-font-jp-sans);
+    font-weight: 300;
+    font-size: var(--af-fs-body-md);
+    line-height: var(--af-lh-body);
+    letter-spacing: var(--af-ls-body);
+    color: var(--af-fg-muted);
+    margin: 0;
+    white-space: pre-wrap;
+  }
+</style>

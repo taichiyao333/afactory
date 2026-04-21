@@ -1,0 +1,86 @@
+---
+import SectionHeading from './SectionHeading.astro';
+import GhostButton from './GhostButton.astro';
+import InterviewCard from './InterviewCard.astro';
+
+export interface Props {
+  heading: { en: string; jp: string };
+  lead: string;
+  motto: string;
+  mottoRepeat: number;
+  viewAllHref: string;
+  casts: {
+    no: string;
+    nameJa: string;
+    nameEn: string;
+    venue: string;
+    image: string;
+    href: string;
+  }[];
+}
+const { heading, lead, motto, mottoRepeat, viewAllHref, casts } = Astro.props;
+const mottoText = motto.repeat(mottoRepeat);
+---
+<section id="interview" class="interview">
+  <div class="interview__motto" aria-hidden="true">{mottoText}</div>
+
+  <div class="interview__inner">
+    <SectionHeading en={heading.en} jp={heading.jp} align="left" />
+    <p class="interview__lead">{lead}</p>
+    <div class="interview__grid">
+      {casts.map((c) => <InterviewCard {...c} />)}
+    </div>
+    <div class="interview__cta">
+      <GhostButton href={viewAllHref}>View&nbsp;All</GhostButton>
+    </div>
+  </div>
+</section>
+
+<style>
+  .interview {
+    background: var(--af-bg);
+    padding: var(--af-section-y-lg) var(--af-pad-x-desktop);
+    position: relative;
+    overflow: hidden;
+  }
+  .interview__motto {
+    position: absolute;
+    right: 24px;
+    top: 120px;
+    bottom: 80px;
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    font-family: var(--af-font-jp-serif);
+    font-weight: 300;
+    font-size: 15px;
+    letter-spacing: 0.7em;
+    color: rgba(255, 255, 255, 0.7);
+    user-select: none;
+    pointer-events: none;
+    white-space: nowrap;
+  }
+  .interview__inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    position: relative;
+  }
+  .interview__lead {
+    font-family: var(--af-font-jp-sans);
+    font-weight: 300;
+    font-size: var(--af-fs-body-md);
+    line-height: var(--af-lh-body);
+    letter-spacing: var(--af-ls-body);
+    color: var(--af-fg-muted);
+    max-width: 640px;
+    margin: 0 0 64px;
+  }
+  .interview__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--af-component-gap-lg);
+  }
+  .interview__cta {
+    margin-top: 64px;
+    text-align: center;
+  }
+</style>
