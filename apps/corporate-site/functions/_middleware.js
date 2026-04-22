@@ -7,8 +7,10 @@
  *
  * Behaviour:
  * - If BASIC_AUTH_USER or BASIC_AUTH_PASS is unset/empty, every request
- *   receives a 503 response (fail-closed). This prevents accidental
- *   public exposure from a misconfigured deployment.
+ *   receives a 503 JSON response that lists which env keys actually
+ *   reached the Function (names only — never values), so a misconfigured
+ *   dashboard deploy is diagnosable in one HTTP call. This prevents
+ *   accidental public exposure on a misconfigured deploy.
  * - If the Authorization header is missing or malformed, returns 401 with
  *   a WWW-Authenticate header so browsers show the native credential
  *   dialog.
@@ -51,17 +53,30 @@ function challenge() {
   });
 }
 
-function misconfigured() {
-  return new Response(
-    'Site not configured: BASIC_AUTH_USER and BASIC_AUTH_PASS must be set in Cloudflare Pages environment variables.',
-    {
-      status: 503,
-      headers: {
-        'Content-Type': 'text/plain; charset=utf-8',
-        'Cache-Control': 'no-store',
-      },
-    },
+function misconfigured(env) {
+  // Return the *names* (not values) of every binding that reached the
+  // Function so a deployer can immediately tell whether their dashboard
+  // configuration is propagating to runtime. Values are never serialised.
+  const presentKeys = env ? Object.keys(env).sort() : [];
+  const missing = ['BASIC_AUTH_USER', 'BASIC_AUTH_PASS'].filter(
+    (name) => !env || !env[name],
   );
+  const body = {
+    error: 'Site not configured',
+    message:
+      'BASIC_AUTH_USER and BASIC_AUTH_PASS must be set in the Cloudflare ' +
+      'dashboard at Settings → Variables and Secrets, with scope including ' +
+      'Production. Redeploy after setting them.',
+    envKeysReceived: presentKeys,
+    missing,
+  };
+  return new Response(JSON.stringify(body, null, 2) + '\n', {
+    status: 503,
+    headers: {
+      'Content-Type': 'application/json; charset=utf-8',
+      'Cache-Control': 'no-store',
+    },
+  });
 }
 
 export async function onRequest(context) {
@@ -71,7 +86,7 @@ export async function onRequest(context) {
   const expectedPass = env.BASIC_AUTH_PASS;
 
   if (!expectedUser || !expectedPass) {
-    return misconfigured();
+    return misconfigured(env);
   }
 
   const authHeader = request.headers.get('Authorization') || '';

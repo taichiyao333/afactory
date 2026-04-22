@@ -139,18 +139,23 @@ Three variables must be configured in the Cloudflare Pages dashboard before the 
 
 #### Setting variables in the dashboard
 
-1. Open the Pages project: **Dashboard → Workers & Pages → `<your-project>`**
-2. Navigate to **Settings → Environment variables**
-3. Select the environment scope: **Production** and/or **Preview**
-4. For each variable:
-   - Click **Add variable**
-   - Enter the name (e.g. `BASIC_AUTH_PASS`)
-   - Enter the value
-   - For `BASIC_AUTH_PASS`, tick **Encrypt** so the value is stored as a secret (redacted in logs, not visible after save)
-5. Click **Save**
-6. **Redeploy** the project (**Deployments → latest → Retry deployment**) so new builds pick up the variables at build time
+> **The correct dashboard path is `Settings → Variables and Secrets`** — not the older "Environment variables" entry that some legacy guides reference. Variables set under "Variables and Secrets" are exposed to **both** build-time (`process.env`) **and** Function runtime (`context.env`). Variables set in any other location may only reach the build, leaving Function runtime undefined.
 
-`BASIC_AUTH_USER`/`BASIC_AUTH_PASS` are read at *request* time by the Function, so they do not require a rebuild — but new deploys may happen first if you change them together with other settings.
+1. Open the Pages project: **Dashboard → Workers & Pages → `<your-project>`**
+2. Navigate to **Settings → Variables and Secrets**
+3. Click **Add** and for each variable enter:
+   - **Name**: e.g. `BASIC_AUTH_PASS`
+   - **Value**: the actual value
+   - **Type**:
+     - `BASIC_AUTH_USER`, `SITE_URL`, `NODE_VERSION` → `Plaintext`
+     - `BASIC_AUTH_PASS` → `Secret` (value is hidden after save and only readable from `context.env`)
+   - **Environment**: tick `Production` (and `Preview` if you also gate preview deploys)
+4. Click **Save**
+5. **Redeploy** the project (**Deployments → latest → Retry deployment**). Variables that already existed at build time apply to *new* deploys; runtime-only changes (e.g. flipping a value) take effect on the next request after redeploy.
+
+#### Diagnosing a 503 from the Function
+
+If the Function returns the JSON 503 response (`"Site not configured"`), inspect the `envKeysReceived` array in the body. It lists exactly which env names are visible to the Function at runtime. If `BASIC_AUTH_USER` / `BASIC_AUTH_PASS` are missing from that array, the variables were either set in the wrong location, set under the wrong environment scope, or the deploy that ran did not include them. Add or move them under **Variables and Secrets → Production** and redeploy.
 
 ### Basic Auth behaviour
 
